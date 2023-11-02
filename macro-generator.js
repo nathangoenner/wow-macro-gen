@@ -1,52 +1,22 @@
 document.addEventListener("DOMContentLoaded", function() {
+    const addTextBoxButton = document.getElementById("add-text-box");
+    const abilityListContainer = document.getElementById("text-boxes");
     const generateMacroButton = document.getElementById("generate-macro");
     const macroOutput = document.getElementById("macro-output");
     const copyToClipboardButton = document.getElementById("copy-to-clipboard");
-    const abilityList = document.getElementById("ability-list");
-
-    generateMacroButton.addEventListener("click", function() {
-        // const selectedAbility = abilitySelect.options[abilitySelect.selectedIndex].text;
-        // const selectedModifier = modifierSelect.value;
-
-        // let macro = `/cast ${selectedAbility}`;
-        // if (selectedModifier) {
-        //     macro = `#${selectedModifier} ${macro}`;
-        // }
-
-        // macroOutput.value = macro;
-        const li = document.createElement("li");
-        li.textContent = macro;
-        abilityList.appendChild(li);
-    });
-
-    copyToClipboardButton.addEventListener("click", function() {
-        macroOutput.select();
-        document.execCommand("copy");
-        window.getSelection().removeAllRanges();
-    });
-
-    // Initialize jQuery UI Sortable for the ability list
-    $(function() {
-        $("#ability-list").sortable();
-        $("#ability-list").disableSelection();
-    });
-});
 
 
-document.addEventListener("DOMContentLoaded", function() {
-    const addTextBoxButton = document.getElementById("add-text-box");
-    const textBoxesContainer = document.getElementById("text-boxes");
-
+    const buttonModText = ["shift", "alt", "ctrl", "???"]
     addTextBoxButton.addEventListener("click", function() {
         // Create a new text box element
         const textBox = document.createElement("div");
         textBox.classList.add("text-box");
 
         // Create three buttons with three states
-        const buttonNames = ["Shift", "Alt", "Ctrl", "Help/Harm"]
+        const buttonTexts = ["Shift", "Alt", "Ctrl", "Help/Harm"]
         for (let i = 0; i < 4; i++) {
             const button = document.createElement("button");
-            button.textContent = `${buttonNames[i]}`;
+            button.textContent = `${buttonTexts[i]}`;
             button.classList.add("neutral"); // Initial state
             button.addEventListener("click", function() {
                 toggleState(button);
@@ -62,8 +32,55 @@ document.addEventListener("DOMContentLoaded", function() {
         // Add the select and input to the text box
         textBox.appendChild(input);
 
+        // Create a "Remove" button
+        const removeButton = document.createElement("button");
+        removeButton.textContent = "Remove";
+        removeButton.addEventListener("click", function() {
+            removeRow(textBox);
+        });
+        textBox.appendChild(removeButton);
+
         // Add the text box to the container
-        textBoxesContainer.appendChild(textBox);
+        abilityListContainer.appendChild(textBox);
+
+    });
+
+    generateMacroButton.addEventListener("click", function() {
+        var abilities = abilityListContainer.getElementsByClassName("text-box")
+        var macro = "#showtooltip\n/cast "
+        for (i=0; i<abilities.length; ++i) {
+            macro += "[@mouseover"
+            const textBox = abilities[i];
+            const ability = textBox.querySelector("input").value
+            const buttons = textBox.querySelectorAll("button");
+            for (let i = 0; i < 3; i++) {
+                const button = buttons[i];
+                const mod = buttonModText[i];
+                if (button.classList[0] == "active") {
+                    macro += `,mod:${mod}`
+                }
+                else if (button.classList[0] == "inactive") {
+                    macro += `,nomod:${mod}`
+                }
+            }
+            const button = buttons[3];
+            if (button.classList[0] == "active") {
+                macro += `,help`
+            } else if (button.classList[0] == "inactive") {
+                macro += `,harm`
+            }
+            macro += `]${ability} `
+        }
+
+        macroOutput.value = macro;
+    });
+
+    copyToClipboardButton.addEventListener("click", function() {
+        const clonedMacro = macroOutput.cloneNode();
+        // clonedMacro.select();
+        macroOutput.select()
+        document.execCommand("copy");
+        // window.getSelection().removeAllRanges();
     });
 });
 
@@ -75,4 +92,9 @@ function toggleState(button) {
     const nextState = states[nextIndex];
     button.classList.remove(currentState);
     button.classList.add(nextState);
+}
+
+function removeRow(row) {
+    // Remove the associated row when the "Remove" button is clicked
+    row.remove();
 }
