@@ -6,35 +6,26 @@
 </head>
 <body>
     <h1>WoW Macro Generator</h1>
+
+    <button type="button" id="add-text-box">Add Ability</button>
+
+    <div id="text-boxes">
+        <!-- Text boxes and selectable options will be added here -->
+    </div>
     
-        <button id="state-toggle-shift" data-state="neutral" class="state-toggle">Shift</button>
-        <button id="state-toggle-ctrl" data-state="neutral" class="state-toggle">Ctrl</button>
     <form id="macro-form">
-        <label for="ability-select">Select Ability:</label>
-        <select id="ability-select">
-            <option value="ability1">Arcane Blast</option>
-            <option value="ability2">Arcane Missiles</option>
-            <!-- Add more abilities here -->
-        </select>
-
-        <label for="modifier-select">Select Modifier:</label>
-        <select id="modifier-select">
-            <option value="">None</option>
-            <option value="ctrl">Ctrl</option>
-            <option value="shift">Shift</option>
-            <option value="alt">Alt</option>
-        </select>
-
         <button type="button" id="generate-macro">Generate Macro</button>
+        <textarea id="macro-output" rows="4" cols="50" readonly></textarea>
+        <button id="copy-to-clipboard">Copy</button>
     </form>
 
-    <textarea id="macro-output" rows="4" cols="50" readonly></textarea>
-    <button id="copy-to-clipboard">Copy</button>
-    <!-- ... Your existing HTML ... -->
-
-<!-- <button id="state-toggle" class="neutral">Toggle State</button> -->
+    <ul id="ability-list">
+        <!-- Abilities will be dynamically added here -->
+    </ul>
 
 
     <script src="macro-generator.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 </body>
 </html>

@@ -20,6 +20,17 @@ textarea {
     resize: none;
 }
 
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    padding: 5px;
+    background-color: #f1f1f1;
+    cursor: grab;
+}
+
 /* CSS styles for button states */
 .neutral {
     background-color: gray;
@@ -31,7 +42,7 @@ textarea {
     color: white;
 }
 
-.not-active {
+.inactive {
     background-color: red;
     color: white;
 }
