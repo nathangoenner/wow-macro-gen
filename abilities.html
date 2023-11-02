@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>WoW Macro Generator</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+    <h1>WoW Macro Generator</h1>
+    
+        <button id="state-toggle-shift" data-state="neutral" class="state-toggle">Shift</button>
+        <button id="state-toggle-ctrl" data-state="neutral" class="state-toggle">Ctrl</button>
+    <form id="macro-form">
+        <label for="ability-select">Select Ability:</label>
+        <select id="ability-select">
+            <option value="ability1">Arcane Blast</option>
+            <option value="ability2">Arcane Missiles</option>
+            <!-- Add more abilities here -->
+        </select>
+
+        <label for="modifier-select">Select Modifier:</label>
+        <select id="modifier-select">
+            <option value="">None</option>
+            <option value="ctrl">Ctrl</option>
+            <option value="shift">Shift</option>
+            <option value="alt">Alt</option>
+        </select>
+
+        <button type="button" id="generate-macro">Generate Macro</button>
+    </form>
+
+    <textarea id="macro-output" rows="4" cols="50" readonly></textarea>
+    <button id="copy-to-clipboard">Copy</button>
+    <!-- ... Your existing HTML ... -->
+
+<!-- <button id="state-toggle" class="neutral">Toggle State</button> -->
+
+
+    <script src="macro-generator.js"></script>
+</body>
+</html>
