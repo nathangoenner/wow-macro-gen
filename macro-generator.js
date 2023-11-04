@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", function() {
         for (let i = 0; i < 4; i++) {
             const button = document.createElement("button");
             button.textContent = `${buttonTexts[i]}`;
-            button.classList.add("neutral"); // Initial state
+            button.classList.add("btn", "neutral"); // Initial state
             button.addEventListener("click", function() {
                 toggleState(button);
             });
@@ -34,6 +34,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
         // Create a "Remove" button
         const removeButton = document.createElement("button");
+		removeButton.classList.add("btn", "btn-danger");
         removeButton.textContent = "Remove";
         removeButton.addEventListener("click", function() {
             removeRow(textBox);
@@ -56,17 +57,17 @@ document.addEventListener("DOMContentLoaded", function() {
             for (let i = 0; i < 3; i++) {
                 const button = buttons[i];
                 const mod = buttonModText[i];
-                if (button.classList[0] == "active") {
+                if (button.classList[1] == "active") {
                     macro += `,mod:${mod}`
                 }
-                else if (button.classList[0] == "inactive") {
+                else if (button.classList[1] == "inactive") {
                     macro += `,nomod:${mod}`
                 }
             }
             const button = buttons[3];
-            if (button.classList[0] == "active") {
+            if (button.classList[1] == "active") {
                 macro += `,help`
-            } else if (button.classList[0] == "inactive") {
+            } else if (button.classList[1] == "inactive") {
                 macro += `,harm`
             }
             macro += `]${ability}`
@@ -88,13 +89,13 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 function toggleState(button) {
-    const states = ["neutral", "active", "inactive"];
-    const currentState = button.classList[0];
-    const currentIndex = states.indexOf(currentState);
-    const nextIndex = (currentIndex + 1) % states.length;
-    const nextState = states[nextIndex];
-    button.classList.remove(currentState);
-    button.classList.add(nextState);
+     const states = ["neutral", "active", "inactive"];
+     const currentState = button.classList[1];
+     const currentIndex = states.indexOf(currentState);
+     const nextIndex = (currentIndex + 1) % states.length;
+     const nextState = states[nextIndex];
+     button.classList.remove(currentState);
+     button.classList.add(nextState);
 }
 
 function removeRow(row) {
