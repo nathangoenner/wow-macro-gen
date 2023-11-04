@@ -69,7 +69,10 @@ document.addEventListener("DOMContentLoaded", function() {
             } else if (button.classList[0] == "inactive") {
                 macro += `,harm`
             }
-            macro += `]${ability} `
+            macro += `]${ability}`
+            if (i < abilities.length-1) {
+                macro += ';'
+            }
         }
 
         macroOutput.value = macro;
