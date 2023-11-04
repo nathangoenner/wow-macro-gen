@@ -1,0 +1,10 @@
+version: '3.7'
+
+services:
+   wow_macro_gen:
+     ports:
+       - "8777:80"
+     restart: always
+     container_name: wow_macro_gen
+     build:
+       context: .
